@@ -16,8 +16,9 @@ remove_extra_shebangs() {
 # Build the play stack
 cat \
   alpha_stub.zsh \
-	system/check/icloud_is_signed_in \
-	system/check/system_preferences_is_closed \
+        system/repo/update \
+        system/check/icloud_is_signed_in \
+        system/check/system_preferences_is_closed \
 	installations/developer_tools/install \
 	installations/homebrew/install \
 	installations/homebrew/base \
@@ -52,8 +53,9 @@ remove_extra_shebangs ../scripts/play.zsh
 # Build the work stack
 cat \
   alpha_stub.zsh \
-	system/check/icloud_is_signed_in \
-	system/check/system_preferences_is_closed \
+        system/repo/update \
+        system/check/icloud_is_signed_in \
+        system/check/system_preferences_is_closed \
 	installations/developer_tools/install \
 	installations/homebrew/install \
 	installations/homebrew/base \
