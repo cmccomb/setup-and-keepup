@@ -6,8 +6,6 @@ heading "Installing applications from the App Store..."
 if [[ $IS_ICLOUD_SIGNED_IN == 1 ]]; then
   echo "iCloud is not signed in. Skipping App Store installations."
 else
-  # ✅ Install collaboration tools
-  mas install 310633997 # WhatsApp
 
   # ✅ Install utilities
   mas install 937984704 # Amphetamine
