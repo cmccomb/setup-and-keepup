@@ -1,5 +1,14 @@
 #!/usr/bin/env sh
 
+# Ensure all paths resolve relative to this script's directory.
+SCRIPT_DIR=$(CDPATH= cd "$(dirname "$0")" 2>/dev/null && pwd)
+if [ -z "${SCRIPT_DIR}" ]; then
+        echo "Unable to determine script directory." >&2
+        exit 1
+fi
+
+cd "${SCRIPT_DIR}" || exit 1
+
 # Make a place to put the scripts after we build them
 rm -rf scripts || true
 mkdir scripts
