@@ -26,16 +26,12 @@ cat \
 	installations/homebrew/cleanup \
 	installations/app_store/base \
 	installations/app_store/play \
-	installations/web_apps/base \
-	installations/web_apps/work \
-	installations/web_apps/cleanup \
-	installations/ai/base \
-	installations/ai/play \
-	customizations/terminal/base \
-	customizations/textedit/base \
-	customizations/photos/base \
-	customizations/safari/base \
-	system/updates/base \
+        installations/ai/base \
+        installations/ai/play \
+        customizations/terminal/base \
+        customizations/textedit/base \
+        customizations/photos/base \
+        system/updates/base \
 	system/screenshots/base \
 	system/energy/base \
 	system/io/base \
@@ -63,16 +59,12 @@ cat \
 	installations/homebrew/cleanup \
 	installations/app_store/base \
 	installations/app_store/work \
-	installations/web_apps/base \
-	installations/web_apps/play \
-	installations/web_apps/cleanup \
-	installations/ai/base \
-	installations/ai/play \
-	customizations/photos/base \
-	customizations/terminal/base \
-	customizations/textedit/base \
-	customizations/safari/base \
-	system/updates/base \
+        installations/ai/base \
+        installations/ai/play \
+        customizations/photos/base \
+        customizations/terminal/base \
+        customizations/textedit/base \
+        system/updates/base \
 	system/screenshots/base \
 	system/energy/base \
 	system/io/base \

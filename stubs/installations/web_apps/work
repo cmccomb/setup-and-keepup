@@ -1,7 +1,0 @@
-#!/usr/bin/env zsh
-
-# ✅ Install a Google Calendar PWA
-__make_pwa "https://calendar.google.com/calendar/u/0/r"
-
-# ✅ Make a Goole Colab PWA
-__make_pwa "https://colab.new/"
