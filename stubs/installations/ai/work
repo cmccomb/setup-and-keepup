@@ -2,7 +2,7 @@
 
 
 # ✅ Install a few of my favorite local LLMs
-download_llamacpp_model "bartowski" "Qwen2.5-0.5B-Instruct-GGUF" "Qwen2.5-0.5B-Instruct-Q4_K_M.gguf"
-download_llamacpp_model "bartowski" "Qwen2.5-1.5B-Instruct-GGUF" "Qwen2.5-1.5B-Instruct-Q4_K_M.gguf"
-download_llamacpp_model "bartowski" "Qwen2.5-3B-Instruct-GGUF" "Qwen2.5-3B-Instruct-Q4_K_M.gguf"
-download_llamacpp_model "bartowski" "Qwen2.5-7B-Instruct-GGUF" "Qwen2.5-7B-Instruct-Q4_K_M.gguf"
+download_llamacpp_model "ggml-org" "Qwen3-0.6B-GGUF" "Qwen3-0.6B-Q4_0.gguf"
+download_llamacpp_model "ggml-org" "Qwen3-1.7B-GGUF" "Qwen3-1.7B-Q4_K_M.gguf"
+download_llamacpp_model "unsloth" "Qwen3-4B-Thinking-2507-GGUF" "Qwen3-4B-Thinking-2507-Q4_K_M.gguf"
+download_llamacpp_model "ggml-org" "Qwen3-8B-GGUF" "Qwen3-8B-Q4_K_M.gguf"
