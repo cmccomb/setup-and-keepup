@@ -1,3 +1,6 @@
+# Generated during build
+scripts/
+
 .idea
 
 ### venv template
