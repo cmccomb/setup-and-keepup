@@ -31,7 +31,7 @@ cat \
 	installations/developer_tools/install \
 	installations/homebrew/install \
 	installations/homebrew/base \
-	installations/homebrew/work \
+        installations/homebrew/play \
 	installations/homebrew/cleanup \
 	installations/app_store/base \
 	installations/app_store/play \
