@@ -92,10 +92,7 @@ brew install --cask docker
 brew install --cask jetbrains-toolbox pycharm webstorm rustrover
 
 # ✅ Install file and project management
-brew install --cask box-drive github
-
-# ✅ Install collaboration
-brew install --cask microsoft-teams zoom
+brew install --cask github
 
 # ✅ Cleanup
 brew cleanup
@@ -111,9 +108,6 @@ heading "Installing applications from the App Store..."
 if [[ $IS_ICLOUD_SIGNED_IN == 1 ]]; then
   echo "iCloud is not signed in. Skipping App Store installations."
 else
-  # ✅ Install collaboration tools
-  mas install 310633997 # WhatsApp
-
   # ✅ Install utilities
   mas install 937984704 # Amphetamine
 
@@ -129,57 +123,6 @@ if [[ $IS_ICLOUD_SIGNED_IN == 1 ]]; then
 else
   echo ""
 fi
-
-heading "Installing web apps..."
-
-# ✅ Function to make a PWA
-function __make_pwa {
-  /usr/bin/osascript <<EOF
-  tell application "Safari"
-    activate
-    open location "$1" -- The URL of the website you want to make a PWA of
-  end tell
-EOF
-
-  # Wait for user to press enter
-  echo "Press [Enter] to continue once you have logged in..."
-  read -r
-
-  /usr/bin/osascript <<EOF
-  tell application "Safari"
-    activate
-  end tell
-  tell application "System Events"
-    tell process "Safari"
-      click menu bar item "File" of menu bar 1 -- Open the "File" menu
-      delay 0.5 -- Allow the menu to appear
-
-      -- Select "Add to Dock…" menu item
-      click menu item "Add to Dock…" of menu 1 of menu bar item "File" of menu bar 1
-
-      -- Hit "Enter" to confirm in case a modal dialog appears
-      delay 1.0 -- Allow time for the modal to appear and for the thumbnail to load
-      keystroke return -- Hit "Enter" to confirm
-    end tell
-  end tell
-EOF
-}
-
-# Wait for user to press enter
-echo  "For each PWA, ensure that the webpage is logged in. Then press [Enter] to continue. If you are ready, press [Enter] now."
-read -r
-
-# ✅ Install a GMail PWA
-__make_pwa "https://mail.google.com/mail/u/0/#inbox"
-
-# ✅ Install a Google Calendar PWA
-__make_pwa "https://calendar.google.com/calendar/u/0/r"
-
-# ✅ Make a Goole Colab PWA
-__make_pwa "https://colab.new/"
-
-# ✅ Close Safari
-/usr/bin/osascript -e 'tell application "Safari" to quit'
 
 heading "Installing AI stack..."
 
