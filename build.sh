@@ -69,7 +69,7 @@ cat \
 	installations/app_store/base \
 	installations/app_store/work \
         installations/ai/base \
-        installations/ai/play \
+        installations/ai/work \
         customizations/photos/base \
         customizations/terminal/base \
         customizations/textedit/base \

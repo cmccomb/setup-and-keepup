@@ -59,3 +59,11 @@ source "$1"' stub "${stub_path}"
         [[ "$output" == *"Test mode active; skipping App Store installations."* ]]
         [[ "$output" != *"mas install"* ]]
 }
+
+@test "work stack includes llama.cpp downloads" {
+        run bash -c "cd \"${REPO_ROOT}\" && ./build.sh"
+        [ "$status" -eq 0 ]
+
+        run bash -c "cd \"${REPO_ROOT}\" && grep -F 'download_llamacpp_model \"ggml-org\" \"Qwen3-8B-GGUF\"' scripts/work.zsh"
+        [ "$status" -eq 0 ]
+}
