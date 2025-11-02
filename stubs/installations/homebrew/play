@@ -1,1 +1,13 @@
 #!/usr/bin/env zsh
+
+# ✅ Install Docker and associated tools
+brew install --cask docker
+
+# ✅ Install code editing tools
+brew install --cask jetbrains-toolbox pycharm webstorm rustrover
+
+# ✅ Install file and project management
+brew install --cask github
+
+# ✅ Cleanup
+brew cleanup
