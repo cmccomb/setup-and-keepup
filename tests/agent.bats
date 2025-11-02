@@ -33,16 +33,29 @@ teardown() {
 }
 
 @test "uninstall flag removes helper artifacts" {
-	target_dir="${TMP_HOME}/mirror"
+        target_dir="${TMP_HOME}/mirror"
 
-	run env HOME="${TMP_HOME}" SETUP_REPO_URL="${REPO_ROOT}" bash "${REPO_ROOT}/agent.sh" --target-dir "${target_dir}" --profile work --schedule "15 6 * * 2"
-	[ "$status" -eq 0 ]
+        run env HOME="${TMP_HOME}" SETUP_REPO_URL="${REPO_ROOT}" bash "${REPO_ROOT}/agent.sh" --target-dir "${target_dir}" --profile work --schedule "15 6 * * 2"
+        [ "$status" -eq 0 ]
 
-	[ -f "${TMP_HOME}/Library/Scripts/run-setup-work.sh" ]
-	[ -f "${TMP_HOME}/Library/LaunchAgents/com.cmccomb.setup.work.plist" ]
+        [ -f "${TMP_HOME}/Library/Scripts/run-setup-work.sh" ]
+        [ -f "${TMP_HOME}/Library/LaunchAgents/com.cmccomb.setup.work.plist" ]
 
-	run env HOME="${TMP_HOME}" bash "${REPO_ROOT}/agent.sh" --uninstall
-	[ "$status" -eq 0 ]
-	[ ! -e "${TMP_HOME}/Library/Scripts/run-setup-work.sh" ]
-	[ ! -e "${TMP_HOME}/Library/LaunchAgents/com.cmccomb.setup.work.plist" ]
+        run env HOME="${TMP_HOME}" bash "${REPO_ROOT}/agent.sh" --uninstall
+        [ "$status" -eq 0 ]
+        [ ! -e "${TMP_HOME}/Library/Scripts/run-setup-work.sh" ]
+        [ ! -e "${TMP_HOME}/Library/LaunchAgents/com.cmccomb.setup.work.plist" ]
+}
+
+@test "app store installations short-circuit in test mode" {
+        stub_path="${REPO_ROOT}/stubs/installations/app_store/base"
+
+        run zsh -c $'function heading(){ echo "HEADING:$1"; }
+export IS_ICLOUD_SIGNED_IN=0
+export SETUP_SKIP_APP_STORE_INSTALL=1
+source "$1"' stub "${stub_path}"
+
+        [ "$status" -eq 0 ]
+        [[ "$output" == *"Test mode active; skipping App Store installations."* ]]
+        [[ "$output" != *"mas install"* ]]
 }

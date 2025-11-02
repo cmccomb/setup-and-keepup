@@ -1,7 +1,11 @@
 #!/usr/bin/env zsh
 
+# Check if we should skip App Store installations entirely.
+if [[ "${SETUP_SKIP_APP_STORE_INSTALL:-0}" == 1 ]]; then
+  echo "Test mode active; skipping App Store installations."
+
 # Check if variable IS_ICLOUD_SIGNED_IN is true
-if [[ $IS_ICLOUD_SIGNED_IN == 1 ]]; then
+elif [[ $IS_ICLOUD_SIGNED_IN == 1 ]]; then
   echo "iCloud is not signed in. Skipping App Store installations."
 else
   echo ""
