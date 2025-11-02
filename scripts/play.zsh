@@ -107,8 +107,9 @@ brew cleanup
 
 heading "Installing applications from the App Store..."
 
-# Check if variable IS_ICLOUD_SIGNED_IN is true
-if [[ $IS_ICLOUD_SIGNED_IN == 1 ]]; then
+if [[ "${SETUP_SKIP_APP_STORE_INSTALL:-0}" == 1 ]]; then
+  echo "Test mode active; skipping App Store installations."
+elif [[ $IS_ICLOUD_SIGNED_IN == 1 ]]; then
   echo "iCloud is not signed in. Skipping App Store installations."
 else
   # ✅ Install collaboration tools
@@ -123,11 +124,12 @@ else
   mas install 462062816 # Microsoft PowerPoint
 fi
 
-# Check if variable IS_ICLOUD_SIGNED_IN is true
-if [[ $IS_ICLOUD_SIGNED_IN == 1 ]]; then
-  echo "iCloud is not signed in. Skipping App Store installations."
-else
-  echo ""
+if [[ "${SETUP_SKIP_APP_STORE_INSTALL:-0}" != 1 ]]; then
+  if [[ $IS_ICLOUD_SIGNED_IN == 1 ]]; then
+    echo "iCloud is not signed in. Skipping App Store installations."
+  else
+    echo ""
+  fi
 fi
 
 heading "Installing web apps..."
