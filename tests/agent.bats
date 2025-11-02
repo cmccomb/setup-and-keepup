@@ -59,3 +59,16 @@ source "$1"' stub "${stub_path}"
         [[ "$output" == *"Test mode active; skipping App Store installations."* ]]
         [[ "$output" != *"mas install"* ]]
 }
+
+@test "app store installations skip when icloud is not signed in" {
+        stub_path="${REPO_ROOT}/stubs/installations/app_store/base"
+
+        run zsh -c $'function heading(){ echo "HEADING:$1"; }
+export IS_ICLOUD_SIGNED_IN=1
+export SETUP_SKIP_APP_STORE_INSTALL=0
+source "$1"' stub "${stub_path}"
+
+        [ "$status" -eq 0 ]
+        [[ "$output" == *"iCloud is not signed in. Skipping App Store installations."* ]]
+        [[ "$output" != *"mas install"* ]]
+}
