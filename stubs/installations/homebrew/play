@@ -1,1 +1,13 @@
 #!/usr/bin/env zsh
+
+# ✅ Install leisure and media apps
+brew install --cask steam vlc
+
+# ✅ Install communication for gaming sessions
+brew install --cask discord
+
+# ✅ Install creative and entertainment tools
+brew install --cask spotify obs
+
+# ✅ Cleanup
+brew cleanup
