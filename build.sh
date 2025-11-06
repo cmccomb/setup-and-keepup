@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # Ensure all paths resolve relative to this script's directory.
-SCRIPT_DIR=$(CDPATH= cd "$(dirname "$0")" 2>/dev/null && pwd)
+SCRIPT_DIR=$(CDPATH='' cd "$(dirname "$0")" 2>/dev/null && pwd)
 if [ -z "${SCRIPT_DIR}" ]; then
         echo "Unable to determine script directory." >&2
         exit 1
