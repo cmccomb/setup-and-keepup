@@ -4,7 +4,7 @@ heading "Installing applications from the App Store..."
 
 if [[ "${SETUP_SKIP_APP_STORE_INSTALL:-0}" == 1 ]]; then
   echo "Test mode active; skipping App Store installations."
-elif [[ "${IS_ICLOUD_SIGNED_IN:-0}" == 1 ]]; then
+elif [[ "${IS_ICLOUD_SIGNED_IN:-0}" == 0 ]]; then
   echo "iCloud is not signed in. Skipping App Store installations."
 else
 

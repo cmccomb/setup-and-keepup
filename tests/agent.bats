@@ -93,11 +93,51 @@ source "$1"' stub "${stub_path}"
         [ "$(grep -Fxc "${expected_line}" "${zprofile_path}")" -eq 1 ]
 }
 
+@test "icloud check exports signed-in flag when account is present" {
+        stub_path="${REPO_ROOT}/stubs/system/check/icloud_is_signed_in"
+
+        run zsh -c $'function heading(){ :; }
+function defaults(){
+        if [[ "$1" == read && "$2" == MobileMeAccounts ]]; then
+                print -r -- "${DEFAULTS_PAYLOAD}"
+        else
+                return 1
+        fi
+}
+DEFAULTS_PAYLOAD="AccountID = example@icloud.com"
+source "$1"
+print -r -- "FLAG:${IS_ICLOUD_SIGNED_IN:-unset}"' stub "${stub_path}"
+
+        [ "$status" -eq 0 ]
+        [[ "$output" == *"iCloud is signed in. Proceeding..."* ]]
+        [[ "$output" == *"FLAG:1"* ]]
+}
+
+@test "icloud check exports signed-out flag when account is absent" {
+        stub_path="${REPO_ROOT}/stubs/system/check/icloud_is_signed_in"
+
+        run zsh -c $'function heading(){ :; }
+function defaults(){
+        if [[ "$1" == read && "$2" == MobileMeAccounts ]]; then
+                print -r -- "${DEFAULTS_PAYLOAD}"
+        else
+                return 1
+        fi
+}
+DEFAULTS_PAYLOAD="No Accounts Configured"
+source "$1"
+print -r -- "FLAG:${IS_ICLOUD_SIGNED_IN:-unset}"' stub "${stub_path}"
+
+        [ "$status" -eq 0 ]
+        [[ "$output" == *"iCloud is not signed in. Some parts of the scripts will not be completed."* ]]
+        [[ "$output" == *"FLAG:0"* ]]
+}
+
 @test "app store installations short-circuit in test mode" {
         stub_path="${REPO_ROOT}/stubs/installations/app_store/base"
 
         run zsh -c $'function heading(){ echo "HEADING:$1"; }
-export IS_ICLOUD_SIGNED_IN=0
+export IS_ICLOUD_SIGNED_IN=1
 export SETUP_SKIP_APP_STORE_INSTALL=1
 source "$1"' stub "${stub_path}"
 
@@ -117,7 +157,7 @@ source "$1"' stub "${stub_path}"
         stub_path="${REPO_ROOT}/stubs/installations/app_store/base"
 
         run zsh -c $'function heading(){ echo "HEADING:$1"; }
-export IS_ICLOUD_SIGNED_IN=1
+export IS_ICLOUD_SIGNED_IN=0
 export SETUP_SKIP_APP_STORE_INSTALL=0
 source "$1"' stub "${stub_path}"
 
