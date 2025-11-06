@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends bats shellcheck
+
+      - name: Run shellcheck
+        run: |
+          set -euo pipefail
+          find . -type f -name "*.sh" -not -path "./scripts/*" -print0 \
+            | xargs -0 -r shellcheck
+
+      - name: Run bats tests
+        run: |
+          set -euo pipefail
+          bats tests/build.bats
