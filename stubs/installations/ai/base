@@ -36,18 +36,3 @@ function download_llamacpp_model() {
     --hf-repo "$huggingface_username/$huggingface_repo" \
     --hf-file "$huggingface_file"
 }
-
-
-function download_jan_model() {
-    # Get the Hugging Face username, repo, and file
-    huggingface_username=$1
-    huggingface_repo=$2
-    huggingface_file=$3
-
-    open "jan://models/huggingface/${huggingface_username}/${huggingface_repo}"
-
-    # Wait for user to press enter
-    echo "Press [Enter] to continue once you selected the model"
-    read
-
-}

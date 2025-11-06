@@ -1,4 +1,1 @@
 #!/usr/bin/env zsh
-
-# ✅ Install a few of my favorite local LLMs
-download_jan_model "bartowski" "Qwen_Qwen3-VL-4B-Thinking-GGUF" "Qwen_Qwen3-VL-4B-Thinking-Q4_K_M.gguf"
