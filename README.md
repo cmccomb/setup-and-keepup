@@ -1,4 +1,5 @@
 # Setup your mac, my way
+[![CI](https://github.com/cmccomb/setup-and-keepup/actions/workflows/ci.yml/badge.svg)](https://github.com/cmccomb/setup-and-keepup/actions/workflows/ci.yml)
 [![work.zsh](https://github.com/cmccomb/setup-and-keepup/actions/workflows/test-work.yml/badge.svg)](https://github.com/cmccomb/setup-and-keepup/actions/workflows/test-work.yml)
 [![play.zsh](https://github.com/cmccomb/setup-and-keepup/actions/workflows/test-play.yml/badge.svg)](https://github.com/cmccomb/setup-and-keepup/actions/workflows/test-play.yml)
 [![deploy](https://github.com/cmccomb/setup-and-keepup/actions/workflows/static.yml/badge.svg)](https://github.com/cmccomb/setup-and-keepup/actions/workflows/static.yml)
