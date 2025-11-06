@@ -112,6 +112,7 @@ source "$1"' stub "${stub_path}"
 
         run bash -c "cd \"${REPO_ROOT}\" && grep -F 'download_llamacpp_model \"ggml-org\" \"Qwen3-8B-GGUF\"' scripts/work.zsh"
         [ "$status" -eq 0 ]
+}
 @test "app store installations skip when icloud is not signed in" {
         stub_path="${REPO_ROOT}/stubs/installations/app_store/base"
 
