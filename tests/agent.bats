@@ -47,6 +47,29 @@ teardown() {
         [ ! -e "${TMP_HOME}/Library/LaunchAgents/com.cmccomb.setup.work.plist" ]
 }
 
+@test "agent resets generated scripts before pulling updates" {
+        target_dir="${TMP_HOME}/mirror"
+
+        run env HOME="${TMP_HOME}" SETUP_REPO_URL="${REPO_ROOT}" bash "${REPO_ROOT}/agent.sh" --target-dir "${target_dir}" --profile work --schedule "15 6 * * 2"
+        [ "$status" -eq 0 ]
+
+        mkdir -p "${target_dir}/scripts"
+        echo "#!/usr/bin/env zsh" >"${target_dir}/scripts/play.zsh"
+        echo "#!/usr/bin/env zsh" >"${target_dir}/scripts/work.zsh"
+        git -C "${target_dir}" add -f scripts/play.zsh scripts/work.zsh
+        echo "# modified" >>"${target_dir}/scripts/play.zsh"
+        echo "# modified" >>"${target_dir}/scripts/work.zsh"
+
+        git -C "${target_dir}" status --porcelain | grep -q 'scripts/play.zsh'
+
+        run env HOME="${TMP_HOME}" SETUP_REPO_URL="${REPO_ROOT}" bash "${REPO_ROOT}/agent.sh" --target-dir "${target_dir}" --profile work --schedule "15 6 * * 2"
+        [ "$status" -eq 0 ]
+
+        run git -C "${target_dir}" status --porcelain
+        [ "$status" -eq 0 ]
+        [ -z "$output" ]
+}
+
 @test "homebrew stub appends shellenv to temporary home" {
         stub_path="${REPO_ROOT}/stubs/installations/homebrew/install"
         zprofile_path="${TMP_HOME}/.zprofile"

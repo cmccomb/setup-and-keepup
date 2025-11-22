@@ -116,7 +116,7 @@ parse_cron_schedule() {
 }
 
 uninstall_agents() {
-	local removed=false
+        local removed=false
 
 	if [[ -d "${HOME}/Library/LaunchAgents" ]]; then
 		while IFS= read -r plist_path; do
@@ -135,11 +135,24 @@ uninstall_agents() {
 		done < <(find "${HOME}/Library/Scripts" -maxdepth 1 -type f -name 'run-setup-*.sh' -print)
 	fi
 
-	if [[ "${removed}" == false ]]; then
-		echo "No setup-and-keepup LaunchAgents were found."
-	else
-		echo "Removed setup-and-keepup LaunchAgents and helper scripts."
-	fi
+        if [[ "${removed}" == false ]]; then
+                echo "No setup-and-keepup LaunchAgents were found."
+        else
+                echo "Removed setup-and-keepup LaunchAgents and helper scripts."
+        fi
+}
+
+# reset_generated_scripts removes any tracked copies of the generated stack scripts
+# so git pulls do not fail when those files drift from the committed state. It
+# only touches the generated scripts and leaves other local changes intact.
+reset_generated_scripts() {
+        if [[ ! -d "${TARGET_DIR}/.git" ]]; then
+                return 0
+        fi
+
+        git -C "${TARGET_DIR}" restore --worktree --staged scripts/play.zsh scripts/work.zsh \
+                >/dev/null 2>&1 || true
+        git -C "${TARGET_DIR}" clean -f -- scripts/play.zsh scripts/work.zsh >/dev/null 2>&1 || true
 }
 
 while (($# > 0)); do
@@ -230,10 +243,11 @@ if [[ "${TARGET_PARENT}" != "${TARGET_DIR}" && -n "${TARGET_PARENT}" ]]; then
 fi
 
 if [[ -d "${TARGET_DIR}/.git" ]]; then
-	git -C "${TARGET_DIR}" remote set-url origin "${REMOTE_URL}"
-	git -C "${TARGET_DIR}" fetch origin
-	if [[ -n "${BRANCH}" ]]; then
-		git -C "${TARGET_DIR}" checkout "${BRANCH}" || true
+        git -C "${TARGET_DIR}" remote set-url origin "${REMOTE_URL}"
+        reset_generated_scripts
+        git -C "${TARGET_DIR}" fetch origin
+        if [[ -n "${BRANCH}" ]]; then
+                git -C "${TARGET_DIR}" checkout "${BRANCH}" || true
 		git -C "${TARGET_DIR}" pull --ff-only origin "${BRANCH}" || git -C "${TARGET_DIR}" pull origin "${BRANCH}"
 	else
 		git -C "${TARGET_DIR}" pull --ff-only || git -C "${TARGET_DIR}" pull
@@ -278,6 +292,8 @@ fi
 if command -v git >/dev/null 2>&1; then
   (
     cd "\${REPO_ROOT}" || exit 1
+    git restore --worktree --staged scripts/play.zsh scripts/work.zsh >/dev/null 2>&1 || true
+    git clean -f -- scripts/play.zsh scripts/work.zsh >/dev/null 2>&1 || true
     git fetch --quiet --all || true
     git pull --quiet --ff-only || git pull --quiet || true
     if [[ -x ./build.sh ]]; then
