@@ -37,3 +37,7 @@ bash <(curl -fsSL https://cmccomb.com/setup-and-keepup/agent.sh)
 
 Pass any of the flags shown above to the one-liner and use the `SETUP_REPO_URL`
 environment variable if you host a fork of the repository.
+
+The agent and its scheduled helper script automatically reset the generated
+`scripts/play.zsh` and `scripts/work.zsh` files before pulling updates so that a
+dirty working tree will not block future refreshes.
