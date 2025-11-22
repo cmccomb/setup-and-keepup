@@ -2,16 +2,16 @@
 
 # Check if we should skip App Store installations entirely.
 if [[ "${SETUP_SKIP_APP_STORE_INSTALL:-0}" == 1 ]]; then
-  echo "Test mode active; skipping App Store installations."
+	echo "Test mode active; skipping App Store installations."
 
 # Check if variable IS_ICLOUD_SIGNED_IN is true
 elif [[ "${IS_ICLOUD_SIGNED_IN:-0}" == 1 ]]; then
-  echo "iCloud is not signed in. Skipping App Store installations."
+	echo "iCloud is not signed in. Skipping App Store installations."
 else
 
-  # ✅ Install developer tools
-  mas install 497799835 # Xcode
+	# ✅ Install developer tools
+	mas install 497799835 # Xcode
 
-  # ✅ Install collaboration tools
-  mas install 803453959 # Slack
+	# ✅ Install collaboration tools
+	mas install 803453959 # Slack
 fi

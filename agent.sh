@@ -70,9 +70,12 @@ reset_generated_scripts() {
                 return 0
         fi
 
-        git -C "${TARGET_DIR}" restore --worktree --staged scripts/play.zsh scripts/work.zsh \
+        git -C "${TARGET_DIR}" reset --mixed HEAD -- scripts/play.zsh scripts/work.zsh \
                 >/dev/null 2>&1 || true
-        git -C "${TARGET_DIR}" clean -f -- scripts/play.zsh scripts/work.zsh >/dev/null 2>&1 || true
+        git -C "${TARGET_DIR}" rm -f --cached --ignore-unmatch scripts/play.zsh scripts/work.zsh \
+                >/dev/null 2>&1 || true
+        rm -rf "${TARGET_DIR}/scripts"
+        git -C "${TARGET_DIR}" clean -f -d -- scripts >/dev/null 2>&1 || true
 }
 
 while (($# > 0)); do

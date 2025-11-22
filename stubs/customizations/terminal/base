@@ -1,5 +1,4 @@
 #!/usr/bin/env zsh
-
 heading "Customizing Terminal..."
 
 # ✅ Make a new settings file
