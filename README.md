@@ -40,3 +40,23 @@ environment variable if you host a fork of the repository.
 The agent and its helper script automatically reset the generated
 `scripts/play.zsh` and `scripts/work.zsh` files before pulling updates so that a
 dirty working tree will not block future refreshes.
+
+## Developing and testing locally
+
+1. Install the test dependencies (examples for common package managers):
+
+   ```bash
+   # Ubuntu/Debian
+   sudo apt-get update
+   sudo apt-get install -y bats shellcheck shfmt zsh
+
+   # macOS (Homebrew)
+   brew install bats-core shellcheck shfmt zsh
+   ```
+
+2. Build the scripts and run the test suite:
+
+   ```bash
+   ./build.sh
+   bats tests/build.bats tests/agent.bats
+   ```

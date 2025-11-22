@@ -19,7 +19,9 @@ cd stubs || exit 1
 
 # Function to remove subsequent shebangs
 remove_extra_shebangs() {
-	sed -i '' '1!{/^#!/d;}' "$1" || sed -i '1!{/^#!/d;}' "$1"
+        tmp_file="${1}.tmp"
+        sed '1!{/^#!/d;}' "$1" >"${tmp_file}"
+        mv "${tmp_file}" "$1"
 }
 
 # Build the play stack

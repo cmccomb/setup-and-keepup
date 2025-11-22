@@ -3,16 +3,16 @@
 heading "Installing applications from the App Store..."
 
 if [[ "${SETUP_SKIP_APP_STORE_INSTALL:-0}" == 1 ]]; then
-  echo "Test mode active; skipping App Store installations."
+	echo "Test mode active; skipping App Store installations."
 elif [[ "${IS_ICLOUD_SIGNED_IN:-0}" == 0 ]]; then
-  echo "iCloud is not signed in. Skipping App Store installations."
+	echo "iCloud is not signed in. Skipping App Store installations."
 else
 
-  # ✅ Install utilities
-  mas install 937984704 # Amphetamine
+	# ✅ Install utilities
+	mas install 937984704 # Amphetamine
 
-  # ✅ Install document editing tools
-  mas install 462054704 # Microsoft Word
-  mas install 462058435 # Microsoft Excel
-  mas install 462062816 # Microsoft PowerPoint
+	# ✅ Install document editing tools
+	mas install 462054704 # Microsoft Word
+	mas install 462058435 # Microsoft Excel
+	mas install 462062816 # Microsoft PowerPoint
 fi
