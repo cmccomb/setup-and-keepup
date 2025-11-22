@@ -5,8 +5,53 @@ on:
     branches: ["main"]
   pull_request:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "ci-pages"
+  cancel-in-progress: false
+
 jobs:
-  lint-and-test:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build setup scripts
+        run: bash build.sh
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-scripts
+          path: scripts
+
+  format:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: built-scripts
+          path: scripts
+
+      - name: Install formatting tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends shfmt
+
+      - name: Check formatting of built scripts
+        run: shfmt -d scripts
+
+  test:
+    needs: format
     runs-on: ubuntu-latest
 
     steps:
@@ -27,4 +72,54 @@ jobs:
       - name: Run bats tests
         run: |
           set -euo pipefail
-          bats tests/build.bats
+          bats tests/build.bats tests/agent.bats
+
+  full-install:
+    needs: test
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build setup scripts
+        run: sh build.sh
+
+      - name: Run work setup
+        run: zsh scripts/work.zsh
+
+  deploy:
+    needs: full-install
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build setup scripts
+        run: sh build.sh
+
+      - name: Cleanup for pages
+        run: |
+          mv stubs/* .
+          rm -rf stubs
+          mv scripts/* .
+          rm -rf scripts
+          rm build.sh
+          rm README.md
+          rm .gitignore
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
