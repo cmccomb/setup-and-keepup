@@ -20,22 +20,23 @@ teardown() {
 @test "agent clones repository with overridden remote" {
 	target_dir="${TMP_HOME}/mirror"
 
-	run env HOME="${TMP_HOME}" SETUP_REPO_URL="${REPO_ROOT}" bash "${REPO_ROOT}/agent.sh" --target-dir "${target_dir}" --profile work --schedule "15 6 * * 2"
+        run env HOME="${TMP_HOME}" SETUP_REPO_URL="${REPO_ROOT}" bash "${REPO_ROOT}/agent.sh" --target-dir "${target_dir}" --profile work
 
-	[ "$status" -eq 0 ]
-	[ -d "${target_dir}/.git" ]
-	[ -f "${target_dir}/build.sh" ]
-	[ -f "${TMP_HOME}/Library/Scripts/run-setup-work.sh" ]
-	[ -f "${TMP_HOME}/Library/LaunchAgents/com.cmccomb.setup.work.plist" ]
-	[ -f "${TMP_HOME}/Library/Logs/run-setup-work.log" ] || true
-	grep -q "<integer>15</integer>" "${TMP_HOME}/Library/LaunchAgents/com.cmccomb.setup.work.plist"
-	grep -q "<integer>6</integer>" "${TMP_HOME}/Library/LaunchAgents/com.cmccomb.setup.work.plist"
+        [ "$status" -eq 0 ]
+        [ -d "${target_dir}/.git" ]
+        [ -f "${target_dir}/build.sh" ]
+        [ -f "${TMP_HOME}/Library/Scripts/run-setup-work.sh" ]
+        [ -f "${TMP_HOME}/Library/LaunchAgents/com.cmccomb.setup.work.plist" ]
+        [ -f "${TMP_HOME}/Library/Logs/run-setup-work.log" ] || true
+        grep -q "<key>RunAtLoad</key>" "${TMP_HOME}/Library/LaunchAgents/com.cmccomb.setup.work.plist"
+        grep -q "<key>KeepAlive</key>" "${TMP_HOME}/Library/LaunchAgents/com.cmccomb.setup.work.plist"
+        ! grep -q "StartCalendarInterval" "${TMP_HOME}/Library/LaunchAgents/com.cmccomb.setup.work.plist"
 }
 
 @test "uninstall flag removes helper artifacts" {
         target_dir="${TMP_HOME}/mirror"
 
-        run env HOME="${TMP_HOME}" SETUP_REPO_URL="${REPO_ROOT}" bash "${REPO_ROOT}/agent.sh" --target-dir "${target_dir}" --profile work --schedule "15 6 * * 2"
+        run env HOME="${TMP_HOME}" SETUP_REPO_URL="${REPO_ROOT}" bash "${REPO_ROOT}/agent.sh" --target-dir "${target_dir}" --profile work
         [ "$status" -eq 0 ]
 
         [ -f "${TMP_HOME}/Library/Scripts/run-setup-work.sh" ]
@@ -50,7 +51,7 @@ teardown() {
 @test "agent resets generated scripts before pulling updates" {
         target_dir="${TMP_HOME}/mirror"
 
-        run env HOME="${TMP_HOME}" SETUP_REPO_URL="${REPO_ROOT}" bash "${REPO_ROOT}/agent.sh" --target-dir "${target_dir}" --profile work --schedule "15 6 * * 2"
+        run env HOME="${TMP_HOME}" SETUP_REPO_URL="${REPO_ROOT}" bash "${REPO_ROOT}/agent.sh" --target-dir "${target_dir}" --profile work
         [ "$status" -eq 0 ]
 
         mkdir -p "${target_dir}/scripts"
@@ -62,7 +63,7 @@ teardown() {
 
         git -C "${target_dir}" status --porcelain | grep -q 'scripts/play.zsh'
 
-        run env HOME="${TMP_HOME}" SETUP_REPO_URL="${REPO_ROOT}" bash "${REPO_ROOT}/agent.sh" --target-dir "${target_dir}" --profile work --schedule "15 6 * * 2"
+        run env HOME="${TMP_HOME}" SETUP_REPO_URL="${REPO_ROOT}" bash "${REPO_ROOT}/agent.sh" --target-dir "${target_dir}" --profile work
         [ "$status" -eq 0 ]
 
         run git -C "${target_dir}" status --porcelain
