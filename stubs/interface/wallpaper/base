@@ -2,9 +2,9 @@
 
 function __set_wallpaper() {
 
-  echo "Setting wallpaper to: $1"
+	echo "Setting wallpaper to: $1"
 
-  # Run the osascript command with Finder
-  /usr/bin/osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"${1}\""
+	# Run the osascript command with Finder
+	/usr/bin/osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"${1}\""
 
 }

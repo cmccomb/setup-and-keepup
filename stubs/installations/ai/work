@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 
-
 # ✅ Install a few of my favorite local LLMs
 download_llamacpp_model "ggml-org" "Qwen3-0.6B-GGUF" "Qwen3-0.6B-Q4_0.gguf"
 download_llamacpp_model "ggml-org" "Qwen3-1.7B-GGUF" "Qwen3-1.7B-Q4_K_M.gguf"

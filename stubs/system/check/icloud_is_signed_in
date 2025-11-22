@@ -4,12 +4,12 @@ heading "Checking if iCloud is signed in..."
 
 # ✅ Check if iCloud is signed in and exit if it’s not
 if defaults read MobileMeAccounts | grep -q AccountID; then
-  echo "iCloud is signed in. Proceeding..."
-  # shellcheck disable=SC2034
-  export IS_ICLOUD_SIGNED_IN=1
+	echo "iCloud is signed in. Proceeding..."
+	# shellcheck disable=SC2034
+	export IS_ICLOUD_SIGNED_IN=1
 else
-  echo "iCloud is not signed in. Some parts of the scripts will not be completed."
-  # shellcheck disable=SC2034
-  export IS_ICLOUD_SIGNED_IN=0
+	echo "iCloud is not signed in. Some parts of the scripts will not be completed."
+	# shellcheck disable=SC2034
+	export IS_ICLOUD_SIGNED_IN=0
 
 fi
