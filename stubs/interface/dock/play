@@ -11,5 +11,7 @@ dockutil --add "$HOME/Desktop" --view grid --display folder --no-restart
 
 # ✅ Add back apps in the order we care about
 dockutil --add /System/Applications/System\ Settings.app --no-restart
-dockutil --add /Applications/Google\ Chrome.app/ --no-restart
+dockutil --add /System/Applications/Utilities/Terminal.app --no-restart
 dockutil --add /System/Applications/Messages.app --no-restart
+dockutil --add /System/Applications/ChatGPT.app --no-restart
+dockutil --add /Applications/Google\ Chrome.app/ --no-restart
