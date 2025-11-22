@@ -4,18 +4,18 @@ heading "Installing AI stack..."
 
 # ✅ Check if ChatGPT is already installed, and install if not
 if [ ! -d "/Applications/ChatGPT.app" ]; then
-    # Download the DMG file
-    curl -L -o /tmp/ChatGPT.dmg https://persistent.oaistatic.com/sidekick/public/ChatGPT.dmg
+	# Download the DMG file
+	curl -L -o /tmp/ChatGPT.dmg https://persistent.oaistatic.com/sidekick/public/ChatGPT.dmg
 
-    # Mount the DMG file
-    hdiutil attach /tmp/ChatGPT.dmg -nobrowse -quiet
+	# Mount the DMG file
+	hdiutil attach /tmp/ChatGPT.dmg -nobrowse -quiet
 
-    # Copy the app to the Applications folder
-    cp -R /Volumes/ChatGPT\ Installer/ChatGPT.app /Applications/
+	# Copy the app to the Applications folder
+	cp -R /Volumes/ChatGPT\ Installer/ChatGPT.app /Applications/
 
-    # Unmount the DMG file and clean up
-    hdiutil detach /Volumes/ChatGPT -quiet
-    rm /tmp/ChatGPT.dmg
+	# Unmount the DMG file and clean up
+	hdiutil detach /Volumes/ChatGPT -quiet
+	rm /tmp/ChatGPT.dmg
 fi
 
 # ✅ Install Jan
@@ -26,13 +26,13 @@ brew install llama.cpp
 
 function download_llamacpp_model() {
 
-  # Get the Hugging Face username, repo, and file
-  huggingface_username=$1
-  huggingface_repo=$2
-  huggingface_file=$3
+	# Get the Hugging Face username, repo, and file
+	huggingface_username=$1
+	huggingface_repo=$2
+	huggingface_file=$3
 
-  # Download the model
-  llama-cli \
-    --hf-repo "$huggingface_username/$huggingface_repo" \
-    --hf-file "$huggingface_file"
+	# Download the model
+	llama-cli \
+		--hf-repo "$huggingface_username/$huggingface_repo" \
+		--hf-file "$huggingface_file"
 }
