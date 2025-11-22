@@ -2,17 +2,21 @@
 
 heading "Refreshing setup repository"
 
-_setup_repo_detect_root() {
-  if [[ -n "${SETUP_REPO_ROOT:-}" && -d "${SETUP_REPO_ROOT}/.git" ]]; then
-    printf '%s' "${SETUP_REPO_ROOT}"
-    return 0
-  fi
+  _setup_repo_detect_root() {
+    if [[ -n "${SETUP_REPO_ROOT:-}" && -d "${SETUP_REPO_ROOT}/.git" ]]; then
+      printf '%s' "${SETUP_REPO_ROOT}"
+      return 0
+    fi
 
-  local script_path
-  script_path="${(%):-%N}"
-  if [[ -z "${script_path}" ]]; then
-    return 1
-  fi
+    local script_path
+    if [[ -n "${funcfiletrace[1]:-}" ]]; then
+      script_path="${funcfiletrace[1]%%:*}"
+    else
+      script_path="${0}"  # fall back to the script path when executed directly
+    fi
+    if [[ -z "${script_path}" ]]; then
+      return 1
+    fi
 
   local script_dir
   script_dir="${script_path:A:h}"
